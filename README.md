@@ -77,6 +77,71 @@ http://localhost:5000
 
 ---
 
+## 🌐 Exponer el backend con Ngrok
+
+Para que el backend Flask sea accesible desde otras redes (por ejemplo, desde una app móvil desarrollada con Expo Go), se puede usar [ngrok](https://ngrok.com/), una herramienta que crea túneles seguros desde internet hacia tu entorno local.
+
+### 🔧 1. Instalar ngrok
+
+#### Opción A: usando npm
+```bash
+npm install -g ngrok
+```
+
+#### Opción B: descargando desde la web
+1. Ir a https://ngrok.com/download
+2. Descargar e instalar según tu sistema operativo
+3. Verificar instalación:
+```bash
+ngrok version
+```
+
+### 🔐 2. Conectar tu cuenta de ngrok
+
+1. Crear una cuenta gratuita en https://ngrok.com
+2. Obtener tu authtoken desde: https://dashboard.ngrok.com/get-started/setup
+3. Configurar el token en tu sistema:
+```bash
+ngrok config add-authtoken TU_AUTHTOKEN
+```
+
+### 🚀 3. Ejecutar el backend Flask
+
+Asegúrate de que el backend esté corriendo localmente:
+
+```bash
+python run.py
+```
+
+### 🌍 4. Crear túnel público con ngrok
+
+En otra terminal, ejecuta:
+
+```bash
+ngrok http 5000
+```
+
+Esto creará una URL pública como:
+
+```
+https://xxxxxx.ngrok-free.app
+```
+
+Esa es la URL que deben usar las aplicaciones externas para consumir los endpoints de este backend.
+
+Y en el frontend deben incluir el token en los headers:
+
+```js
+fetch("https://xxxxxx.ngrok-free.app/api/vuelo", {
+  method: "POST",
+  headers: {
+    Authorization: "Bearer 123456"
+  }
+});
+```
+
+---
+
 ## 📡 Endpoints disponibles
 
 ### 📍 `POST /api/vuelo`
