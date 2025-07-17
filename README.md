@@ -129,23 +129,6 @@ https://xxxxxx.ngrok-free.app
 
 Esa es la URL que deben usar las aplicaciones externas para consumir los endpoints de este backend.
 
-### 🔒 5. (Opcional) Seguridad por token
-
-Puedes proteger la API pública añadiendo una verificación simple en Flask:
-
-```python
-from flask import Flask, request, jsonify
-
-app = Flask(__name__)
-API_TOKEN = "123456"
-
-@app.before_request
-def verificar_token():
-    token = request.headers.get("Authorization")
-    if token != f"Bearer {API_TOKEN}":
-        return jsonify({"error": "Unauthorized"}), 401
-```
-
 Y en el frontend deben incluir el token en los headers:
 
 ```js
